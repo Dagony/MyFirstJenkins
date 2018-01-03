@@ -1,12 +1,14 @@
 var fs = require ('fs');
 
 fs.readFile('tmp/meat.json', 'utf8', function(err, data) {
-    var meat;
-
     if (err) throw err;
-    meat = JSON.parse(data);
+    var meat = JSON.parse(data);
+    var content = "# MEAT!!1!\n\n";
+    meat.forEach(function(p) {
+        content += p + "\n\n";
+    });
 
-    fs.writeFile('tmp/meat.md', "Content here!", function(err) {
+    fs.writeFile('tmp/meat.md', content, function(err) {
         if (err) throw err;
     });
 });
