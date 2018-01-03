@@ -7,8 +7,7 @@ pipeline {
 	stages {
 	    stage('Install tools') {
 	        steps {
-	            sh 'apt-get update'
-	            sh 'apt-get install -y curl'
+	            sh 'npm install'
 	        }
 	    }
 
