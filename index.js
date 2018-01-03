@@ -1,8 +1,12 @@
 var fs = require ('fs');
-var meat;
 
 fs.readFile('tmp/meat.json', 'utf8', function(err, data) {
+    var meat;
+
     if (err) throw err;
     meat = JSON.parse(data);
-    console.log(meat);
+
+    fs.writeFile('tmp/meat.md', "Content here!", function(err) {
+        if (err) throw err;
+    });
 });

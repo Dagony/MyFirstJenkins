@@ -24,5 +24,11 @@ pipeline {
                sh 'node index.js'
             }
 	    }
+
+	    stage('Publish results') {
+	        steps {
+	            archive 'tmp/meat.md'
+	        }
+	    }
 	}
 }
