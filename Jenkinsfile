@@ -11,5 +11,12 @@ pipeline {
 	            sh 'apt-get install -y curl'
 	        }
 	    }
+
+	    stage('Collect data') {
+	        steps {
+	            sh 'mkdir -p tmp'
+	            sh 'curl https://baconipsum.com/api/?type=meat-and-filler --output tmp/meat.json --silent'
+	        }
+	    }
 	}
 }
