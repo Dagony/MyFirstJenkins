@@ -28,6 +28,14 @@ pipeline {
 	    stage('Publish results') {
 	        steps {
 	            archive 'tmp/meat.md'
+	            publishHTML target: [
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll              : true,
+                        reportDir            : 'tmp',
+                        reportFiles          : 'meat.html',
+                        reportName           : 'Generated html'
+                ]
 	        }
 	    }
 	}
