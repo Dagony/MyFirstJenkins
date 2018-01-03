@@ -1,7 +1,7 @@
 pipeline {
 	agent {
 		docker {
-			image 'ubuntu'
+			image 'node'
 		}
 	}
 	stages {
@@ -17,6 +17,10 @@ pipeline {
 	            sh 'mkdir -p tmp'
 	            sh 'curl https://baconipsum.com/api/?type=meat-and-filler --output tmp/meat.json --silent'
 	        }
+	    }
+
+	    stage('Process data') {
+               sh 'node index.js'
 	    }
 	}
 }
