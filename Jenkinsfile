@@ -37,5 +37,14 @@ pipeline {
                 ]
 	        }
 	    }
+
+	    stage('Install React') {
+	        steps {
+	            sh 'mkdir src'
+	            sh 'cp reactPackage.json src/package.json'
+	            sh 'cd src'
+	            sh 'npm install'
+	        }
+	    }
 	}
 }
