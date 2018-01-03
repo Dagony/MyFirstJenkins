@@ -20,7 +20,9 @@ pipeline {
 	    }
 
 	    stage('Process data') {
+	        steps {
                sh 'node index.js'
+            }
 	    }
 	}
 }
