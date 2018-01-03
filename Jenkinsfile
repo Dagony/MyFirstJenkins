@@ -37,13 +37,5 @@ pipeline {
                 ]
 	        }
 	    }
-
-	    stage('Install React') {
-	        steps {
-	            sh 'mkdir -p src'
-	            sh 'cp reactPackage.json src/package.json'
-	            sh 'npm install --prefix ./src'
-	        }
-	    }
 	}
 }
