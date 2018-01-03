@@ -40,7 +40,7 @@ pipeline {
 
 	    stage('Install React') {
 	        steps {
-	            sh 'mkdir src'
+	            sh 'mkdir -p src'
 	            sh 'cp reactPackage.json src/package.json'
 	            sh 'ls src'
 	        }
