@@ -42,7 +42,7 @@ pipeline {
 	        steps {
 	            sh 'mkdir -p src'
 	            sh 'cp reactPackage.json src/package.json'
-	            sh 'ls src'
+	            sh 'npm install --prefix ./src'
 	        }
 	    }
 	}
