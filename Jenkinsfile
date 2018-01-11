@@ -27,7 +27,7 @@ pipeline {
 
 	    stage('Run Newman Collection') {
 	        steps {
-                sh 'newman run Sandbox_Quickstart.postman_collection.json -e Sandbox_Quickstart.postman_environment.json'
+                sh 'newman run Sandbox_Quickstart.postman_collection.json -e Sandbox_Quickstart.postman_environment.json -r html,cli'
 	        }
 	    }
 
@@ -42,6 +42,9 @@ pipeline {
                         reportFiles          : 'meat.html',
                         reportName           : 'Generated html'
                 ]
+	        }
+	        steps {
+	            archive ''
 	        }
 	    }
 	}
