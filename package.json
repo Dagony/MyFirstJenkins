@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Dagony/MyFirstJenkins#readme",
   "dependencies": {
-    "marky-markdown": "^11.3.2"
+    "marky-markdown": "^11.3.2",
+    "newman" : "^3.9.1"
   }
 }

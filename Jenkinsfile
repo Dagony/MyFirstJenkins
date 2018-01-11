@@ -8,7 +8,6 @@ pipeline {
 	    stage('Install tools') {
 	        steps {
 	            sh 'npm install'
-	            sh 'npm install newman --save'
 	        }
 	    }
 
