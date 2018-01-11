@@ -8,6 +8,7 @@ pipeline {
 	    stage('Install tools') {
 	        steps {
 	            sh 'npm install'
+	            sh 'npm install newman'
 	        }
 	    }
 
@@ -22,6 +23,12 @@ pipeline {
 	        steps {
                sh 'node index.js'
             }
+	    }
+
+	    stage('Run Newman Collection') {
+	        steps {
+                sh 'newman run Sandbox_Quickstart.postman_colleciton.json -e Sandbox_Quickstart.postman_environment.json'
+	        }
 	    }
 
 	    stage('Publish results') {

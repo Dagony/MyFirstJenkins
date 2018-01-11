@@ -1,0 +1,347 @@
+{
+	"info": {
+		"name": "Guide: Sandbox Quickstart",
+		"_postman_id": "24656a60-0dad-75fc-a7c0-4fbff991332e",
+		"description": "Sandbox quickstart guide: https://support.xill.io/support/solutions/articles/24000018822-xillio-api-sandbox-quickstart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e947f063-5e08-4794-888b-aea74a402c7c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 418\", function() {",
+							"    pm.response.to.have.status(418);",
+							"});",
+							"",
+							"pm.test(\"Validate response body\", function() {",
+							"    pm.response.to.have.jsonBody(\"message\");",
+							"    pm.response.to.have.jsonBody(\"body\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://sandbox.xill.io/v2/system/ping",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"xill",
+						"io"
+					],
+					"path": [
+						"v2",
+						"system",
+						"ping"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Create Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6136cfda-067f-46ed-9728-b90e3ba4c7ec",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validate response body\", function() {",
+							"    pm.response.to.have.jsonBody(\"access_token\");",
+							"    pm.response.to.have.jsonBody(\"token_type\");",
+							"    pm.response.to.have.jsonBody(\"expires_in\");",
+							"    pm.response.to.have.jsonBody(\"scope\");",
+							"    pm.response.to.have.jsonBody(\"jti\");",
+							"});",
+							"",
+							"pm.test(\"Validate scopes\", function() {",
+							"    let scope = pm.response.json().scope;",
+							"    pm.expect(scope).to.eql(\"user users configurations entities contents\");",
+							"});",
+							"",
+							"pm.test(\"Save access token\", function() {",
+							"    let data = pm.response.json();",
+							"    pm.environment.set(\"AccessToken\", data.access_token);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "xilliosandbox",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "xilliosandbox",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "xillio",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "demo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://sandbox.xill.io/oauth/token",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"xill",
+						"io"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "List Repositories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66600439-f85b-4ffe-9da1-ccfae090f27f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validate response body\", function() {",
+							"    pm.response.to.have.jsonBody(\"children\");",
+							"});",
+							"",
+							"pm.test(\"Validate configuration\", function() {",
+							"    let children = pm.response.json().children;",
+							"    let configuration = children[0];",
+							"    ",
+							"    pm.expect(configuration.id).to.eql(\"https://sandbox.xill.io/v2/entities/5a184d0207903113023b5aa8\");",
+							"    pm.expect(configuration.xdip).to.eql(\"xdip://5a184d0207903113023b5aa8/\");",
+							"    pm.expect(configuration.kind).to.eql(\"FileSystem\");",
+							"    pm.expect(configuration.original.name.systemName).to.eql(\"5a184d0207903113023b5aa8\");",
+							"    pm.expect(configuration.original.name.displayName).to.eql(\"Sandbox Folder #1\");",
+							"    pm.expect(configuration.original).to.eql(configuration.modified);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://sandbox.xill.io/v2/entities?scope=children",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"xill",
+						"io"
+					],
+					"path": [
+						"v2",
+						"entities"
+					],
+					"query": [
+						{
+							"key": "scope",
+							"value": "children",
+							"equals": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "List Files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "df831709-7e0b-4399-a93f-8798c77a22df",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://sandbox.xill.io/v2/entities/5a184d0207903113023b5aa8?scope=children",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"xill",
+						"io"
+					],
+					"path": [
+						"v2",
+						"entities",
+						"5a184d0207903113023b5aa8"
+					],
+					"query": [
+						{
+							"key": "scope",
+							"value": "children"
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{AccessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1515279e-0266-45f0-b733-c583d6c28a14",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "575c33af-6f63-41fb-85e3-96bb0df995fe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
