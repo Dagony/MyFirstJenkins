@@ -27,7 +27,7 @@ pipeline {
 
 	    stage('Run Newman Collection') {
 	        steps {
-                sh 'newman run Sandbox_Quickstart.postman_collection.json -e Sandbox_Quickstart.postman_environment.json -r html,cli'
+                sh 'newman run Sandbox_Quickstart.postman_collection.json -e Sandbox_Quickstart.postman_environment.json -r html,cli --reporter-html-export tmp/newman_report.html'
 	        }
 	    }
 
@@ -44,7 +44,15 @@ pipeline {
                 ]
 	        }
 	        steps {
-	            archive ''
+	            archive 'tmp/newman_report.html'
+	            publishHTML target: [
+	                   allowMissing         : false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll              : true,
+                        reportDir            : 'tmp',
+                        reportFiles          : 'newman_report.html',
+                        reportName           : 'Newman Reports html'
+	            ]
 	        }
 	    }
 	}
