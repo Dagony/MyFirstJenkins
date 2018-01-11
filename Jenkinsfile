@@ -42,9 +42,6 @@ pipeline {
                         reportFiles          : 'meat.html',
                         reportName           : 'Generated html'
                 ]
-	        }
-	        steps {
-	            archive 'tmp/newman_report.html'
 	            publishHTML target: [
 	                   allowMissing         : false,
                         alwaysLinkToLastBuild: false,
